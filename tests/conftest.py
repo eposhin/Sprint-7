@@ -26,3 +26,9 @@ def generate_courier_data():
     yield [registration_data, login_data]
     login_courier = requests.post(f'{Url.MAIN_URL}{Url.COURIER_LOGIN}', json=login_data)
     requests.delete(f'{Url.MAIN_URL}{Url.COURIER_DELETE}{login_courier.json()["id"]}')
+
+@pytest.fixture
+def cancel_order():
+    def _cancel_order(track):
+        requests.put(f'{Url.MAIN_URL}{Url.ORDER_CANCEL}{track}')
+    return _cancel_order
